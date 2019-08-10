@@ -25,7 +25,7 @@ public class MockingBot implements EventListener {
     RES_FOLDER = (args.length>0)?"res/":"~/res/";
     JDA jda = null;
     try {
-      jda = new JDABuilder("NjA5MDE4NTE4MzgxMzk1OTY4.XU7R2w.Li822ULFKkhbiCCQNFf1muUAEM0")
+      jda = new JDABuilder("NjA5MDE4NTE4MzgxMzk1OTY4.XU7Uuw.4IMPgOO4Zqipg7s-IiBR6Rq34II")
           .addEventListener(new MockingBot())
           .build();
     } catch (LoginException e) {
