@@ -22,7 +22,7 @@ public class MockingBot implements EventListener {
   public static String RES_FOLDER;
   public static void main(String[] args) {
     // Note: It is important to register your ReadyListener before building
-    RES_FOLDER = (args.length>0)?"res/":"~/res/";
+    RES_FOLDER = (args.length>1)?"res/":"~/res/";
     JDA jda = null;
     try {
       jda = new JDABuilder(args[0])
@@ -57,7 +57,7 @@ public class MockingBot implements EventListener {
           System.out.println("mocking");
           BufferedImage bufferedImage = null;
           try {
-            bufferedImage = ImageIO.read(new File("1oxb9s.jpg"));
+            bufferedImage = ImageIO.read(new File(RES_FOLDER+"1oxb9s.jpg"));
             Graphics g = bufferedImage.getGraphics();
             g.setFont(g.getFont().deriveFont(30f));
             g.setColor(Color.BLACK);
