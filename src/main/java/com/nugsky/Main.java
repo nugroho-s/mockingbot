@@ -1,0 +1,69 @@
+package com.nugsky;
+
+import net.dv8tion.jda.core.AccountType;
+import net.dv8tion.jda.core.JDA;
+import net.dv8tion.jda.core.JDABuilder;
+import net.dv8tion.jda.core.entities.MessageEmbed;
+import net.dv8tion.jda.core.events.Event;
+import net.dv8tion.jda.core.events.ReadyEvent;
+import net.dv8tion.jda.core.events.message.MessageReceivedEvent;
+import net.dv8tion.jda.core.hooks.EventListener;
+
+import java.awt.Color;
+import java.awt.Graphics;
+import java.awt.image.BufferedImage;
+import java.io.ByteArrayInputStream;
+import java.io.ByteArrayOutputStream;
+import java.io.File;
+import java.io.IOException;
+import java.io.InputStream;
+import javax.imageio.ImageIO;
+import javax.security.auth.login.LoginException;
+
+public class Main implements EventListener {
+  public static String RES_FOLDER;
+  public static void main(String[] args) throws LoginException, InterruptedException {
+    // Note: It is important to register your ReadyListener before building
+    RES_FOLDER = (args.length>0)?"res/":"~/res/";
+    JDA jda = new JDABuilder("NjA5MDE4NTE4MzgxMzk1OTY4.XUwslg.9cEJjxZPnqp7vCRyckC2kwHZFGw")
+        .addEventListener(new Main())
+        .build();
+
+    // optionally block until JDA is ready
+    jda.awaitReady();
+  }
+
+  @Override
+  public void onEvent(Event event) {
+    if (event instanceof ReadyEvent) {
+      System.out.println("API is ready!");
+    } else if (event instanceof MessageReceivedEvent){
+      if (((MessageReceivedEvent) event).getMessage().getAuthor().isBot()){
+        return;
+      }
+
+      //human
+      String rawMsg = ((MessageReceivedEvent) event).getMessage().getContentRaw();
+      if (rawMsg.charAt(0) == '#'){
+        if (rawMsg.equals("#mock")){
+          System.out.println("mocking");
+          BufferedImage bufferedImage = null;
+          try {
+            bufferedImage = ImageIO.read(new File("1oxb9s.jpg"));
+            Graphics g = bufferedImage.getGraphics();
+            g.setFont(g.getFont().deriveFont(30f));
+            g.setColor(Color.BLACK);
+            g.drawString("NOTICE", 100, 100);
+            g.dispose();
+            ByteArrayOutputStream os = new ByteArrayOutputStream();
+            ImageIO.write(bufferedImage,"png", os);
+            InputStream fis = new ByteArrayInputStream(os.toByteArray());
+            ((MessageReceivedEvent) event).getChannel().sendFile(fis,"mock.png").queue();
+          } catch (IOException e) {
+            e.printStackTrace();
+          }
+        }
+      }
+    }
+  }
+}
