@@ -71,7 +71,7 @@ public class MockingBot implements EventListener {
             e.printStackTrace();
           }
         } else if (rawMsg.equals("#ping")) {
-          messageReceivedEvent.getChannel().sendMessage("pong");
+          messageReceivedEvent.getChannel().sendMessage("pong").queue();
         }
       }
     }
