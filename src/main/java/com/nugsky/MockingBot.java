@@ -23,7 +23,7 @@ public class MockingBot implements EventListener {
   public static void main(String[] args) {
     // Note: It is important to register your ReadyListener before building
     System.out.println(System.getProperty("user.home"));
-    RES_FOLDER = (args.length>1)?System.getProperty("user.home")+"/res/":"res/";
+    RES_FOLDER = (args.length>1)?"/root/res/":"res/";
     JDA jda = null;
     try {
       jda = new JDABuilder(args[0])
