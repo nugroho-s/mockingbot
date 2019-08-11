@@ -15,6 +15,7 @@ import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
+import java.net.URL;
 import javax.imageio.ImageIO;
 import javax.security.auth.login.LoginException;
 
@@ -22,8 +23,6 @@ public class MockingBot implements EventListener {
   public static String RES_FOLDER;
   public static void main(String[] args) {
     // Note: It is important to register your ReadyListener before building
-    System.out.println(System.getProperty("user.home"));
-    RES_FOLDER = (args.length>1)?"/root/res/":"res/";
     JDA jda = null;
     try {
       jda = new JDABuilder(args[0])
@@ -58,8 +57,7 @@ public class MockingBot implements EventListener {
           System.out.println("mocking");
           BufferedImage bufferedImage = null;
           try {
-            System.out.println(RES_FOLDER+"1oxb9s.jpg");
-            bufferedImage = ImageIO.read(new File(RES_FOLDER+"1oxb9s.jpg"));
+            bufferedImage = ImageIO.read(new URL("https://i.imgur.com/0gDmUzX.jpg"));
             Graphics g = bufferedImage.getGraphics();
             g.setFont(g.getFont().deriveFont(30f));
             g.setColor(Color.BLACK);
