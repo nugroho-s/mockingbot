@@ -54,21 +54,24 @@ public class MockingBot implements EventListener {
       MessageReceivedEvent messageReceivedEvent = (MessageReceivedEvent) event;
       if (rawMsg.charAt(0) == '#'){
         if (rawMsg.equals("#mock")){
-          System.out.println("mocking");
-          BufferedImage bufferedImage = null;
-          try {
-            bufferedImage = ImageIO.read(new URL("https://i.imgur.com/0gDmUzX.jpg"));
-            Graphics g = bufferedImage.getGraphics();
-            g.setFont(g.getFont().deriveFont(30f));
-            g.setColor(Color.BLACK);
-            g.drawString("NOTICE", 100, 100);
-            g.dispose();
-            ByteArrayOutputStream os = new ByteArrayOutputStream();
-            ImageIO.write(bufferedImage,"png", os);
-            InputStream fis = new ByteArrayInputStream(os.toByteArray());
-            ((MessageReceivedEvent) event).getChannel().sendFile(fis,"mock.png").queue();
-          } catch (IOException e) {
-            e.printStackTrace();
+          String[] mockMsg = rawMsg.split(" ",2);
+          if (mockMsg.length > 1) {
+            System.out.println("mocking");
+            BufferedImage bufferedImage = null;
+            try {
+              bufferedImage = ImageIO.read(new URL("https://i.imgur.com/0gDmUzX.jpg"));
+              Graphics g = bufferedImage.getGraphics();
+              g.setFont(g.getFont().deriveFont(30f));
+              g.setColor(Color.BLACK);
+              g.drawString(mockMsg[1], 100, 100);
+              g.dispose();
+              ByteArrayOutputStream os = new ByteArrayOutputStream();
+              ImageIO.write(bufferedImage,"png", os);
+              InputStream fis = new ByteArrayInputStream(os.toByteArray());
+              ((MessageReceivedEvent) event).getChannel().sendFile(fis,"mock.png").queue();
+            } catch (IOException e) {
+              e.printStackTrace();
+            }
           }
         } else if (rawMsg.equals("#ping")) {
           messageReceivedEvent.getChannel().sendMessage("pong").queue();
