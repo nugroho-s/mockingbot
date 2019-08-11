@@ -53,7 +53,8 @@ public class MockingBot implements EventListener {
       String rawMsg = ((MessageReceivedEvent) event).getMessage().getContentRaw();
       MessageReceivedEvent messageReceivedEvent = (MessageReceivedEvent) event;
       if (rawMsg.charAt(0) == '#'){
-        if (rawMsg.equals("#mock")){
+        String command = rawMsg.split(" ",2)[0];
+        if (command.equals("#mock")){
           String[] mockMsg = rawMsg.split(" ",2);
           if (mockMsg.length > 1) {
             System.out.println("mocking");
@@ -73,7 +74,7 @@ public class MockingBot implements EventListener {
               e.printStackTrace();
             }
           }
-        } else if (rawMsg.equals("#ping")) {
+        } else if (command.equals("#ping")) {
           messageReceivedEvent.getChannel().sendMessage("pong").queue();
         }
       }
